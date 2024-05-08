@@ -1,12 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+export const prerender = false;
+import { sanityClient } from "sanity:client";
+const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug)]`);
 ---
 
 <Layout title="My Portfolio">
+<h1>Blog</h1>
+<ul>
+{
+  posts.map((post) => {
+    return (
+      <li><a href={"/posts/" + post.slug.current}>{post.title}</a></li>
+    );
+  })
+}
+</ul>
 	<main>
-	    <h1>Hello, World!</h1>
-
 	</main>
 </Layout>
 
