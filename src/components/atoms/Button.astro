@@ -1,0 +1,103 @@
+---
+import Icon from "../atoms/Icon.astro"
+
+const {
+  target,
+  type = "button",
+  text,
+  size = "md",
+  isfilled,
+  theme = "light",
+  icon = '',
+  className = '',
+
+  ...rest
+} = Astro.props;
+
+
+const background = `var(--${theme})`;
+const foreground = theme === "light" ? "var(--primary)" : "var(--light)";
+
+---
+
+{type === 'button' || type === 'submit' || type === 'reset' ? (
+  <button
+    class={`${className} ${isfilled ? "filled" : ""}`}
+    type={type}
+    data-size={size}
+    {...rest}
+  >
+    <Fragment set:html={text} />
+    <slot />
+  </button>
+) : (
+  <a href={rest.href} {...rest}>
+    <Fragment set:html={text} />
+    {icon && <Icon name={icon} />}
+  </a>
+)}
+
+
+<style define:vars={{
+    background: `var(--${theme})`,
+    foreground: theme === "light" ? "var(--primary)" : "var(--light)"
+  }}>
+
+   button {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    display: flex;
+    gap: 0.2em;
+    align-items: center;
+    color: var(--txt--dark);
+    border: solid var(--background);
+    padding: 0.2em 1.25em; 
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    transition: box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+  }
+
+  /* button.filled {
+    background-color: var(--background);
+    color: var(--foreground);
+    border: none;
+  } */
+
+  button:focus {
+    outline-color: transparent;
+  }
+
+  button:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+
+  button:focus-visible {
+    box-shadow: 0 0 0 0.1em var(--light), 0 0 0 0.3em var(--background);
+  }
+
+  [data-size="sm"] {
+    font-size: 0.8rem;
+  }
+  [data-size="md"] {
+    font-size: 1.1rem;
+  }
+  [data-size="lg"] {
+    font-size: 1.5rem;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon svg {
+    width: 1em;
+    height: 1em;
+  } */
+</style>
