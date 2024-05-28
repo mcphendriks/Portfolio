@@ -1,35 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-export const prerender = false;
-import { sanityClient } from "sanity:client";
-const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug)]`);
+import Card from "../components/Card.astro";
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+import { getPosts } from "../utils/sanity";
+
+const posts = await getPosts();
 ---
 
-<Layout title="My Portfolio">
-<h1>Blog</h1>
-<ul>
-{
-  posts.map((post) => {
-    return (
-      <li><a href={"/posts/" + post.slug.current}>{post.title}</a></li>
-    );
-  })
-}
-</ul>
-	<main>
-	</main>
+<Layout title="Welcome to Astro.">
+  <section>
+    {posts.length ? posts.map((post) => <Card post={post} />) : <Welcome />}
+  </section>
 </Layout>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	
-</style>

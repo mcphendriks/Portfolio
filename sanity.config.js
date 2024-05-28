@@ -1,34 +1,22 @@
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
+const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID ||
+    import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET ||
+    import.meta.env.PUBLIC_SANITY_DATASET;
 
+if (!projectId || !dataset) {
+    throw new Error(`Missing environment variable(s). Check if named correctly in .env file.\n\nShould be:\nPUBLIC_SANITY_STUDIO_PROJECT_ID=${projectId}\nPUBLIC_SANITY_STUDIO_DATASET=${dataset}\n\nAvailable environment variables:\n${JSON.stringify(import.meta.env, null, 2)}`);
+}
+import { defineConfig } from "sanity";
+import { deskTool } from "sanity/desk";
+import { visionTool } from "@sanity/vision";
+import { schemaTypes } from "./schema";
 export default defineConfig({
-  title: "Portfolio",
-  projectId: import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID,
-  dataset: import.meta.env.PUBLIC_SANITY_STUDIO_DATASET,
-  plugins: [structureTool()],
-  schema: {
-    types: [
-      {
-        type: "document",
-        name: "post",
-        title: "Post",
-        fields: [
-          {
-            name: "title",
-            title: "Title",
-            type: "string",
-          },
-          {
-            name: "slug",
-            title: "Slug",
-            type: "slug",
-            options: {
-              source: "title",
-              maxLength: 96,
-            },
-          },
-        ],
-      },
-    ],
-  },
+    name: "project-name",
+    title: "Project Name",
+    projectId,
+    dataset,
+    plugins: [deskTool(), visionTool()],
+    schema: {
+        types: schemaTypes,
+    },
 });

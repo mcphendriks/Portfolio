@@ -1,22 +1,31 @@
-import { defineConfig } from 'astro/config';
-import sanityIntegration from "@sanity/astro";
-import react from "@astrojs/react";
+
 import { loadEnv } from "vite";
-import netlify from "@astrojs/netlify";
+const {
+  PUBLIC_SANITY_STUDIO_PROJECT_ID,
+  PUBLIC_SANITY_STUDIO_DATASET,
+  PUBLIC_SANITY_PROJECT_ID,
+  PUBLIC_SANITY_DATASET,
+} = loadEnv(import.meta.env.MODE, process.cwd(), "");
+import { defineConfig } from "astro/config";
 
-const { PUBLIC_SANITY_STUDIO_PROJECT_ID, PUBLIC_SANITY_STUDIO_DATASET } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
+const projectId = PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID;
+const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
 
-// https://astro.build/config
+import sanity from "@sanity/astro";
+import react from "@astrojs/react";
+
+import vercel from "@astrojs/vercel/serverless";
+
+
 export default defineConfig({
-    output: 'hybrid',
-    integrations: [
-        sanityIntegration({
-            projectId: PUBLIC_SANITY_STUDIO_PROJECT_ID,
-            dataset: PUBLIC_SANITY_STUDIO_DATASET,
-            useCdn: true,
-            studioBasePath: '/admin',
-        }),
-        react(),
-    ],
-    adapter: netlify(),
+  output: "hybrid",
+  adapter: vercel(),
+  integrations: [sanity({
+    projectId,
+    dataset,
+    studioBasePath: "/admin",
+    useCdn: false,
+    apiVersion: "2023-03-20" 
+  }), react() 
+  ]
 });
