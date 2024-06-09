@@ -1,6 +1,7 @@
 ---
-import Card from "../components/Card.astro";
-import Welcome from "../components/Welcome.astro";
+import CallToAction from "../components/molecules/CallToAction.astro";
+import Hero from "../components/molecules/Hero.astro"
+import Projects from "../components/molecules/Projects.astro"
 import Layout from "../layouts/Layout.astro";
 import { getPosts } from "../utils/sanity";
 
@@ -8,7 +9,19 @@ const posts = await getPosts();
 ---
 
 <Layout title="Welcome to Astro.">
-  <section>
-    {posts.length ? posts.map((post) => <Card post={post} />) : <Welcome />}
-  </section>
+  <main>
+    <Hero />
+    <Projects posts={posts} />
+    <CallToAction />
+  </main>
 </Layout>
+
+<style>
+  main {
+    max-width: 96%;
+    margin-inline: auto;
+  }
+
+
+  
+</style>
