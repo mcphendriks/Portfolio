@@ -1,6 +1,5 @@
 ---
 import Card from "../Card.astro";
-import Welcome from "../Welcome.astro";
 import Title from "../molecules/Title.astro";
 
 const { posts } = Astro.props;
@@ -8,10 +7,11 @@ const { posts } = Astro.props;
 <Title />
 
 <section>
-    <div class="product-grid">
-      {posts.length ? posts.map((post: any) => <Card post={post} key={post.id} />) : <Welcome />}
-    </div>
+  <div class="product-grid">
+      {posts.length ? posts.map((post) => <Card post={post} key={post.id} />) : null}
+  </div>
 </section>
+
 
 <style>
   section {
