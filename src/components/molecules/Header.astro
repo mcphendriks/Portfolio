@@ -1,0 +1,104 @@
+---
+import Navigation from '../molecules/Navigation.astro';
+import Button from '../atoms/Button.astro';
+
+---
+
+
+<header>
+    <span>MCP STUDIOS</span>
+    <button type="button" id="mainMenuOpen" tabindex="-1" hidden>Menu</button>
+    <Navigation className="nav" />
+    <Button  type="button" theme="primary" text="Download" icon="iconName" size="sm" />
+    <Button  type="a" href="/path-to-link" theme="secondary" text="Contact" size="sm"  />
+</header>
+
+
+<style>
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem;
+	  gap:1.5rem;
+}
+
+span {
+    flex: 1; 
+    text-align: center; 
+}
+
+.nav {
+    order: -1; 
+} 
+
+.buttons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+@media (max-width:48rem) {
+    span {
+    display: flex;
+    justify-content: flex-start; 
+
+    }
+	#mainMenuOpen {
+		display:block;
+		flex-grow:0;
+		line-height:1;
+	}
+
+    #mainMenuOpen + .nav {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      background: red;
+      transition:
+        top 2s 0.5s,
+        opacity 0.5s;
+    }
+    #mainMenuOpen:focus + .nav,
+    #mainMenuOpen + .nav:focus-within {
+      left: 0;
+      opacity: 1;
+      transition:
+        top 0s,
+        opacity 0.5s;
+    }
+
+    #mainMenuOpen + .nav li {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      font-size: 3rem;
+      font-weight: 500;
+    }
+
+    #mainMenuOpen + .nav > ul:after {
+      content: 'close';
+      display: block;
+      position: absolute;
+      top: 1.5rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    #mainMenuOpen + .nav > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+  }
+
+</style>

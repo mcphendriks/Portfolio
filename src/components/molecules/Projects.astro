@@ -1,0 +1,28 @@
+---
+import Card from "../Card.astro";
+import Title from "../molecules/Title.astro";
+
+const { posts } = Astro.props;
+---
+<Title />
+
+<section>
+  <div class="product-grid">
+      {posts.length ? posts.map((post) => <Card post={post} key={post.id} />) : null}
+  </div>
+</section>
+
+
+<style>
+  section {
+  --grid-gap: 0.8rem;
+  }
+
+  .product-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: var(--grid-gap);
+  
+  }
+ 
+</style>

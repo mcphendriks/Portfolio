@@ -1,0 +1,75 @@
+---
+import Button from '../atoms/Button.astro';
+---
+
+<section>
+  <div class="hero-title">
+    <h1>Hi, I am Michelle a Frontend Developer based in AMSTERDAM</h1>
+  </div>
+
+  <div class="hero-sub-content"> 
+    <h2>Who I am</h2>
+    <article>
+    <p>I'm a frontend developer student located in Amsterdam. 
+      I want to become a skilled frontend developer and create elevating human experience by creating interactive webpages.
+       I spend my days by reading, TV series, family&friends and learning everyday to become better. </p>      
+      <Button  type="button" theme="primary" text="Get in touch" icon="iconName" size="sm" />
+    </article>
+    </div>
+
+
+ 
+</section>
+
+<style>
+  section { 
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%; 
+  height: auto; 
+  padding: 3rem 0 4rem 0
+  } 
+
+  h1 { 
+  font-size: 100px; 
+  letter-spacing: .2rem;
+  padding: 1rem 0;  
+  } 
+
+  h2 {
+    padding: 1rem 0;
+  }
+
+  p {
+    font-size: 30px;
+    padding-bottom: 1rem;
+  }
+
+  @media (min-width: 48em) {
+  .hero-sub-content {
+    display: flex;
+    padding-right: 4em;
+    -moz-column-count: 2; 
+    -moz-column-gap: 4em;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 4em;
+    column-count: 2;
+    column-gap: 1em;
+  }
+  .hero-sub-content > * {
+    margin-top: 0px;
+  }
+
+  h2 {
+        flex: 1 1 30%; 
+    }
+
+  article {
+        flex: 1 1 70%; 
+    }
+
+}
+
+
+</style>
